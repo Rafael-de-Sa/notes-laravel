@@ -67,7 +67,7 @@ class AuthController
             ]
         ]);
 
-        echo "LOGIN COM SUCESSO";
+        return redirect()->to('/');
     }
     public function logout()
     {
