@@ -29,7 +29,28 @@ class MainController
 
     public function newNoteSubmit(Request $request)
     {
-        echo "I'm creating a new note";
+        //validate request
+        $request->validate(
+            [
+                'text_title' =>  ['required', 'min:3', 'max:200'],
+                'text_note' => ['required', 'min:3', 'max:3000']
+            ], //error messages
+            [
+                'text_title.required' => 'O username é obridatório.',
+                'text_title.email' => 'O username dever ser um email válido.',
+                'text_title.min' => 'A senha deve possuir ao menos :min caracteres.',
+
+                'text_password.required' => 'A senha é obrigatória.',
+                'text_password.min' => 'A senha deve possuir ao menos :min caracteres.',
+                'text_password.max' => 'A senha deve possuir no máximo :max caracteres.'
+            ]
+        );
+        //get user id
+
+        //create new note
+
+        //redirect to home
+
     }
 
     public function editNote($id)
