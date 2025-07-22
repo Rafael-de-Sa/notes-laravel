@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Note;
 use App\Models\User;
 use App\Services\Operations;
 use Illuminate\Contracts\Encryption\DecryptException;
@@ -36,21 +37,28 @@ class MainController
                 'text_note' => ['required', 'min:3', 'max:3000']
             ], //error messages
             [
-                'text_title.required' => 'O username é obridatório.',
-                'text_title.email' => 'O username dever ser um email válido.',
-                'text_title.min' => 'A senha deve possuir ao menos :min caracteres.',
+                'text_title.required' => 'O título é obrigatório.',
+                'text_title.min' => 'O título deve possuir no máximo :min caracteres.',
+                'text_title.max' => 'O título deve possuir ao menos :max caracteres.',
 
-                'text_password.required' => 'A senha é obrigatória.',
-                'text_password.min' => 'A senha deve possuir ao menos :min caracteres.',
-                'text_password.max' => 'A senha deve possuir no máximo :max caracteres.'
+                'text_note.required' => 'A nota é obrigatória.',
+                'text_note.min' => 'A nota deve possuir ao menos :min caracteres.',
+                'text_note.max' => 'A nota deve possuir no máximo :max caracteres.'
             ]
         );
+
         //get user id
+        $id = session('user.id');
 
         //create new note
+        $note = new Note();
+        $note->user_id = $id;
+        $note->title = $request->text_title;
+        $note->text = $request->text_note;
+        $note->save();
 
         //redirect to home
-
+        return redirect()->route('home');
     }
 
     public function editNote($id)
